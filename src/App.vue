@@ -1,17 +1,25 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <LoginPage></LoginPage>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import LoginPage from "./components/LoginPage";
+import store from "./js/store";
 
 export default {
   name: 'App',
+  store: store,
+  data: function () {
+    return {
+      isLogged: false,
+      username: '',
+      role: ''
+    }
+  },
   components: {
-    HelloWorld
+    LoginPage,
   }
 }
 </script>
