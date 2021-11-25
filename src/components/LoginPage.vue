@@ -37,6 +37,7 @@
 <script>
 import $ from 'jquery';
 import {URL_SERVLET} from "../js/constants";
+import Cookies from  'js-cookie';
 
 export default {
   name: "LoginPage",
@@ -48,9 +49,6 @@ export default {
   },
   methods: {
     handleLogin: function () {
-      console.log("Trying to login")
-      console.log(this.username)
-      console.log(this.password)
       let self = this;
       $.get(`${URL_SERVLET}auth/login`, {
         id: this.username,
@@ -60,9 +58,11 @@ export default {
           self.$store.commit('setRole', {role: data.user.role})
           self.$store.commit('setUsername', {username: self.username})
           self.$store.commit('setIsLogged', {isLogged: true})
+          self.setCookies();
           self.$router.push({
             path: '/home'
           });
+
 
           //Find a way to display notifications
         } else {
@@ -70,7 +70,10 @@ export default {
           console.log(data)
         }
       })
-      console.log("Finished")
+    },
+    setCookies: function () {
+      Cookies.set('username', this.$store.getters.getUsername)
+      Cookies.set('role', this.$store.getters.getRole)
     }
   }
 }
