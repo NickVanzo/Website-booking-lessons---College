@@ -1,7 +1,19 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+/**
+ * Components import
+ */
+import LoginPage from "../components/LoginPage";
+import Home from "../components/Home";
+
 Vue.use(Vuex);
+
+export const routes = [
+    {path: '/home', component: Home},
+    {path: '/login', component: LoginPage}
+]
+
 
 export default new Vuex.Store({
     state: {
@@ -10,14 +22,14 @@ export default new Vuex.Store({
         role: ''
     },
     mutations: {
-        setUsername(state, newName) {
-            state.username = newName;
+        setUsername(state, payload) {
+            state.username = payload.username;
         },
-        setIsLogged(state, logStatus) {
-            state.isLogged = logStatus;
+        setIsLogged(state, payload) {
+            state.isLogged = payload.isLogged;
         },
-        setRole(state, role) {
-            state.role = role;
+        setRole(state, payload) {
+            state.role = payload.role;
         }
     },
     getters: {

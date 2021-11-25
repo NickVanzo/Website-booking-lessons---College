@@ -1,12 +1,13 @@
 <template>
   <div id="app">
-    <LoginPage></LoginPage>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import LoginPage from "./components/LoginPage";
 import store from "./js/store";
+
+
 
 export default {
   name: 'App',
@@ -19,7 +20,6 @@ export default {
     }
   },
   components: {
-    LoginPage,
   }
 }
 </script>

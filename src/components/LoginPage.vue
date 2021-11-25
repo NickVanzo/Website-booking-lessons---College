@@ -35,6 +35,9 @@
 </template>
 
 <script>
+import $ from 'jquery';
+import {URL_SERVLET} from "../js/constants";
+
 export default {
   name: "LoginPage",
   data: function () {
@@ -45,12 +48,29 @@ export default {
   },
   methods: {
     handleLogin: function () {
-      this.$store.commit('setUsername', this.username);
-      this.$store.commit('setIsLogged', true);
-      this.$store.commit('setRole', 'ADMIN');
-      console.log(this.$store.getters.getIsLogged);
-      console.log(this.$store.getters.getUsername);
-      console.log(this.$store.getters.getRole);
+      console.log("Trying to login")
+      console.log(this.username)
+      console.log(this.password)
+      let self = this;
+      $.get(`${URL_SERVLET}auth/login`, {
+        id: this.username,
+        psw: this.password
+      }, function (data) {
+        if (data.message === ("Logged succesfully")) {
+          self.$store.commit('setRole', {role: data.user.role})
+          self.$store.commit('setUsername', {username: self.username})
+          self.$store.commit('setIsLogged', {isLogged: true})
+          self.$router.push({
+            path: '/home'
+          });
+
+          //Find a way to display notifications
+        } else {
+          //Find a way to display notifications
+          console.log(data)
+        }
+      })
+      console.log("Finished")
     }
   }
 }
